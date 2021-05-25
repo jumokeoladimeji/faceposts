@@ -1,14 +1,5 @@
-import { mocked } from 'ts-jest/utils';
-import { createUser } from './user';
-import { userServiceCreate, updateUser, getUser } from '../servces/user';
-import { verifyEmailToken } from '../services/token';
-
-jest.mock('../services/user');
-const mockedUserServiceCreate = mocked(userServiceCreate, true);
-const mockedUpdateUser = mocked(updateUser, true);
-const mockedGetUser = mocked(getUser, true);
-const mockedVerifyEmailToken = mocked(verifyEmailToken, true);
-
+import * as userService from '../services/user';
+import { createUser, signinUser } from './user';
 
 const mockedUser = {
   id: '1232',
@@ -35,17 +26,17 @@ describe('user controller', () => {
     });
 
     test('should return error if user already exists', async () => {
-      mockedGetUser.mockImplementationOnce(() =>
+      const userServiceGetUserSpy = jest.spyOn(userService, 'getUser').mockImplementationOnce(() =>
         Promise.resolve(mockedUser)
       );
-      await expect(createUser(user, host)).resolves.toHaveProperty('error', 'User with email address alreading exists.');
-    });
 
-    test('should return user if user creation is successful', async () => {
-      mockedCreateUser.mockImplementationOnce(() =>
-        Promise.resolve(mockedUser)
-      );
-      await expect(createUser(user, host)).resolves.toHaveProperty('status', 201);
+      const result =  await createUser(user, host);
+      expect(userServiceGetUserSpy).toHaveBeenCalledWith({"email": "test@mail.com"});
+      expect({ 
+        success: false,
+        status: 422,
+        error: 'User with email address alreading exists.'
+      }).toEqual(result);
     });
   });
 
@@ -54,41 +45,34 @@ describe('user controller', () => {
       await expect(signinUser({ password: 'test', email: 'test22' })).resolves.toHaveProperty('status', 422);
     });
 
-    test('should return error if user exists', async () => {
-      mockedGetUser.mockImplementationOnce(() =>
+    test('should return error if user exists and account is not verified', async () => {
+      mockedUser.isVerified = false;
+      const userServiceGetUserSpy = jest.spyOn(userService, 'getUser').mockImplementationOnce(() =>
         Promise.resolve(mockedUser)
       );
-      await expect(signinUser(user)).resolves.toHaveProperty('error', 'User with email does not exist.');
-    });
-  
-    test('should return error if password does not match', async () => {
-      mockedFindUser.mockImplementationOnce(() =>
-        Promise.resolve(mockedUser)
-      );
-      await expect(signinUser(user)).resolves.toHaveProperty('error', 'Invalid password.');
-    });
-  
-    test('should login user if successful', async () => {
-      mockedFindUser.mockImplementationOnce(() =>
-        Promise.resolve(mockedUser)
-      );
-      await expect(signinUser(user)).resolves.toHaveProperty('status', 200);
-    });
-  });
 
-  describe('verifyTokenAndCompleteSignup', () => {
-    test('should return error if token is invalid', async () => {
-      mockedVerifyEmailToken.mockImplementationOnce(() =>
-      Promise.resolve(false)
-    );
-      await expect(verifyTokenAndCompleteSignup({ password: 'test', email: 'test22' })).resolves.toHaveProperty('status', 422);
+      const result =  await signinUser(user);
+      expect(userServiceGetUserSpy).toHaveBeenCalledWith({"email": "test@mail.com"});
+      expect({ 
+        success: false,
+        status: 403,
+        error: 'Please verify your account.'
+      }).toEqual(result);
     });
 
-    test('should return error if user does not exists', async () => {
-      mockedGetUser.mockImplementationOnce(() =>
+    test('should return error if user exists and password is invalid', async () => {
+      mockedUser.isVerified = true;
+      const userServiceGetUserSpy = jest.spyOn(userService, 'getUser').mockImplementationOnce(() =>
         Promise.resolve(mockedUser)
       );
-      await expect(verifyTokenAndCompleteSignup('w823772%^7')).resolves.toHaveProperty('error', 'User with email does not exist.');
+
+      const result =  await signinUser(user);
+      expect(userServiceGetUserSpy).toHaveBeenCalledWith({"email": "test@mail.com"});
+      expect({ 
+        success: false,
+        status: 401,
+        error: 'Invalid password.'
+      }).toEqual(result);
     });
   });
 });

@@ -1,4 +1,3 @@
-// import joi from 'joi';
 import * as joi from 'joi';
 
 import { hashPassword, generateToken, validPassword  } from '../middleware/authentication';
