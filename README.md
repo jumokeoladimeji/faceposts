@@ -72,15 +72,15 @@ Gmail was used. Anyone that has 2 factor authentication set up in his gmail acco
 ### To Upload Images
 * Create a Cloudinary account
 * Navigate to the dashboard, copy the following:
-- The base URL
-- API SECRET=7KM1CY9z8YSukY1B3_CGf24QToM
-- API KEY=571114823812768
-- CLOUDINARY_URL
-- CLOUDINARY NAME
-- CLOUDINARY API BASE URL
+
+1. The base URL
+2. API SECRET
+3. API KEY
+4. CLOUDINARY_URL
+5. CLOUDINARY NAME
+6. CLOUDINARY API BASE URL
 
 * Click on settings and navigate to the upload tab: 
-- Copy the Upload Preset Name app name
-Click 
+7. Copy the Upload Preset Name app name
 
 * Add details to your .env file
