@@ -44,7 +44,6 @@ CREATE DATABASE faceposts;
 
 ### Populate the DB with meal and user data
 In your terminal cd to faceposts and run:
-```
 
 ```sequelize db:migrate
 ```
