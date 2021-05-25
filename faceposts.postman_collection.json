@@ -1,0 +1,315 @@
+{
+	"variables": [],
+	"info": {
+		"name": "faceposts",
+		"_postman_id": "8ae6edcd-7cf4-adfc-942b-dba2fec64065",
+		"description": " API that is similar to the posts functionality of Facebook.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"description": "",
+			"item": [
+				{
+					"name": "Get A Post",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/1/posts/2",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"message\": \"test this thing\",\n   \"friends_tagged\": [\"jom\"]\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit A Post",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/1/posts/2",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"message\": \"test this thing\",\n   \"friends_tagged\": [\"jom\"]\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get All  User Posts",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/1/posts",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"message\": \"trying this out\"\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Posts With An Image",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/1/posts",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"message\": \"trying this out\",\n   \"image\": \"/Users/jumoke/Downloads/count.jpeg\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Like A Post",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/1/posts/2/likes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"content\": false\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Reply A Post",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/1/posts/3/replies",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"content\": \"not sure about this\"\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "User Registration",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/signup",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"jumoke5ng@yahoo.com\",\n    \"password\": \"12127238823\"\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "User SIgnin",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/signin",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"jumoke5ng@yahoo.com\",\n    \"password\": \"12127238823\"\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/forgotpassword",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"jumoke5ng@yahoo.com\"\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password Link Sent From Email",
+					"request": {
+						"url": "http://localhost:5000/resetPassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6OCwiaWF0IjoxNjIxOTM2NzU0LCJleHAiOjE2MjIwMjMxNTR9.Gz7ME8IrJHb1RXZlyiS9HJHkaheoJSWggFkdPKGeCEM",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"url": "http://localhost:5000/api/v1/user/changePassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6OCwiaWF0IjoxNjIxOTM3NTk2LCJleHAiOjE2MjIwMjM5OTZ9.I-f36hp5ob7W6tKpEK-dOrSCKA_T24w2LyOw2CWz1GE",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"72389$$%^^\",\n    \"confirmPassword\": \"72389$$%^^\"\n}\n\t"
+						},
+						"description": "This is the link that the reset Password Link redirects to."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Images",
+			"description": "",
+			"item": [
+				{
+					"name": "Image Upload",
+					"request": {
+						"url": "http://localhost:5000/api/v1/images/upload",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic Og==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"file\": \"/Users/jumoke/Documents/faceposts/dog.jpeg\"\n}\n\t"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
