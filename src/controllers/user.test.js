@@ -60,7 +60,7 @@ describe('user controller', () => {
       }).toEqual(result);
     });
 
-    test('should return error if user exists and password is invalid', async () => {
+    test('should return error if user exists and password does not match saved password', async () => {
       mockedUser.isVerified = true;
       const userServiceGetUserSpy = jest.spyOn(userService, 'getUser').mockImplementationOnce(() =>
         Promise.resolve(mockedUser)
