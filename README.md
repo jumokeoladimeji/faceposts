@@ -73,8 +73,8 @@ Gmail was used. Anyone that has 2 factor authentication set up in his gmail acco
 * Create a Cloudinary account
 * Navigate to the dashboard, copy the following:
 - The base URL
-- API SECRET=7KM1CY9z8YSukY1B3_CGf24QToM
-- API KEY=571114823812768
+- API SECRET
+- API KEY
 - CLOUDINARY_URL
 - CLOUDINARY NAME
 - CLOUDINARY API BASE URL
