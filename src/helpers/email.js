@@ -17,10 +17,10 @@ export const sendEmail = async (emailObj) => {
     subject: emailObj.subject,
     html: emailObj.message
   };
-  transporter.sendMail(mailBody, function (err, message) {
-    if (err) {
-      throw 'Error sending the email to user';
-    }
-  });
+  try {
+    await transporter.sendMail(mailBody);
+  } catch (error) {
+    throw 'Error sending the email to user';
+  }
 }
   

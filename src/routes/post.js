@@ -9,23 +9,17 @@ import { paginate  } from '../middleware/authentication';
 const postRouter = express.Router();
 
 postRouter
-    // .post('/', verifyToken, postHandler.create)
-    .post('/user/:userId/posts', postHandler.create)
-    // .get('/', verifyToken, paginate(), postHandler.getAll)
-    .get('/posts', postHandler.getAll)
-    .get('/user/:userId/posts', postHandler.getAllByUser)
+    .post('/user/:userId/posts', verifyToken, postHandler.create)
+    .get('/posts', verifyToken, postHandler.getAll)
+    .get('/user/:userId/posts', verifyToken, postHandler.getAllByUser)
 
-    // .put('/:postId', verifyToken, postHandler.update)
-    .put('/user/:userId/posts/:postId', postHandler.update)
-
-    // .get('/:postId', verifyToken, postHandler.get)
+    .put('/user/:userId/posts/:postId', verifyToken, postHandler.update)
     .get('/user/:userId/posts/:postId', postHandler.getOne)
 
-    .delete('/user/:userId/posts/:postId', postHandler.delete)
-        // .post('/:postId/likes', verifyToken, postHandler.get)
+    .delete('/user/:userId/posts/:postId', verifyToken, postHandler.delete)
 
-    .post('/user/:userId/posts/:postId/likes', likeHandler.likePost)
-    .post('/user/:userId/posts/:postId/replies', replyHandler.replyPost);
-    // .delete('/:postId', verifyToken, postHandler.delete);
+    .post('/user/:userId/posts/:postId/likes', verifyToken, likeHandler.likePost)
+    .post('/user/:userId/posts/:postId/replies', verifyToken, replyHandler.replyPost);
+
 
 export default postRouter;

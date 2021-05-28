@@ -1,7 +1,10 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+
 const secret = require('../config').secret;
-const User = require('../models').User;
-const bcrypt = require('bcryptjs');
+
+import { getUser } from '../services/user';
+
 
 const getTokenFromHeader = (req) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
@@ -12,9 +15,6 @@ const getTokenFromHeader = (req) => {
   return null;
 }
 
-  // const hashPassword = (password, saltRounds) => bcrypt.hash(password, saltRounds)
-  // .then(hash => hash)
-  // .catch(error => error);
 export const hashPassword = async (password) => {
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, function(err, salt) {
@@ -28,45 +28,52 @@ export const hashPassword = async (password) => {
 export const validPassword = (password, hashedPassword) => {
   return bcrypt.compare(password, hashedPassword);
 };
-  /**
-  * @description - Generates token for user authentication
-  * @param {object} user - object containing user details
-  * @returns {object} token - jwt token
-  */
+/**
+* @description - Generates token for user authentication
+* @param {object} user - object containing user details
+* @returns {object} token - jwt token
+*/
 export const generateToken = (user, expiresIn) => {
   if (expiresIn) {
     return jwt.sign({
-      email: user.id
+      email: user.email
     }, secret, { expiresIn });
   }
   return jwt.sign({
     email: user.email
   }, secret);
 };
-  /**
-  *
-  * @desciption - Verifies token
-  */
-export const verifyToken = (request, response, next) => {
-  const token = request.headers.authorization ||
-  request.headers['x-access-token'];
-  request.decoded = {};
-  if (token) {
+/**
+*
+* @desciption - Verifies token
+*/
+export const verifyTokenAndReturnDecoded = (token) => {
+  return new Promise((resolve, reject) => {
     jwt.verify(token, secret, (error, decoded) => {
       if (error) {
-        return response.status(401).json({
-          message: 'Session expired. Please login to continue',
-        });
+        return reject(error);
       }
-      User.findById(decoded.userId).then((user) => {
-        if (!user) { return response.sendStatus(401).send({message: 'Unauthorized'}); }
-        request.decoded = decoded;
-        next();
+      return resolve(decoded);
+    });
+  });
+};
+
+export const verifyToken = async (request, response, next) => {
+  request.decoded = {};
+
+  const token = getTokenFromHeader(request);
+  try {
+    if (token) {
+      const decoded = await verifyTokenAndReturnDecoded(token);
+      const user = await getUser({ email: decoded.email });
+      request.decoded = user;
+      next();
+    } else {
+      return response.status(401).json({
+        error: 'Token required for access',
       });
-    });
-  } else {
-    return response.status(401).json({
-      message: 'Token required for access',
-    });
+    }
+  } catch (error) {
+    return response.status(403).json({ error: 'Invalid or no Token was provided. Please login to continue' });
   }
 };

@@ -12,7 +12,6 @@ export const getPagination = (page, size) => {
 
 
 export const getPagingData = (returnedData, page, limit) => {
-    console.log('returnedData===', returnedData)
     const { count: totalItems, rows: data } = returnedData;
     const currentPage = page ? +page : 0;
     const totalPages = Math.ceil(totalItems / limit);
