@@ -65,7 +65,16 @@ npm run start:dev
 ```
 
 ### For Email Notification
-Gmail was used. Anyone that has 2 factor authentication set up in his gmail account needs to create an APP Password in his gmail account. 
+1. Visit Google Developer Console https://console.cloud.google.com/ to create a project. 
+2. Configure consent screen. (Select external as the User Type)
+3. Click on API Services tab. Create OAuth 2.0 API Credentials by clicking create credentials in the credentials tab. select OAuth client ID. Add https://developers.google.com/oauthplayground as an Authorized redirect URI
+4. Copy the client ID and client secret
+5. Navigte to https://developers.google.com/oauthplayground
+6. Click the gear icon and check the Use your own OAuth credentials box and paste in the client id and secret from step 4
+7. On the left, under the Select & authorize APIs section, find `Gmail API v1` and select https://mail.google.com/. 
+8. click Authorize APIs.
+9. click the Exchange authorization code for tokens button under the Exchange authorization code for tokens section.
+10. Copy the refresh token generated
 
 * Add details to your .env file
 
