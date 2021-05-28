@@ -5,7 +5,7 @@ jest.mock('../services/user');
 jest.mock('../middleware/authentication');
 
 const { getUser } = require('../services/user');
-const { validPassword } = require('..//middleware/authentication');
+const { validPassword } = require('../middleware/authentication');
 
 afterAll(async () => {
     server.close();
