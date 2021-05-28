@@ -4,13 +4,20 @@ import nodemailer from 'nodemailer';
 export const sendEmail = async (emailObj) => {
   const adminMail = process.env.ADMIN_MAIL;
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
+      type: 'OAuth2',
       user: adminMail,
-      pass: process.env.MAIL_PASS, // generated ethereal password
+      clientId: process.env.MAIL_CLIENT_ID,
+      clientSecret: process.env.MAIL_CLIENT_SECRET,
+      refreshToken: process.env.MAIL_USER_REFRESH_TOKEN,
+      accessToken: process.env.MAIL_ACCESS_TOKEN,
+      expires: 1484314697598
     }
   });
-  // use a queue
+
   const mailBody = {
     from: `Faceposts <${adminMail}>`,
     to: emailObj.email,
