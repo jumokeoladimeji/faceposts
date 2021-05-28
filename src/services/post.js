@@ -22,9 +22,31 @@ export const createPost = async (postDetails, userId) => {
 
 /**
  * @description - Fetches all Posts
+ * limit - page size
+ * * offset - number of rows to be omitted before the beginning of the result set
 */
-export const listPost = async () => {
+export const listPost = async (limit, offset) => {
+    const posts = await Post.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        include: [{
+            model: Like,
+            as: 'likes',
+        }, {
+            model: Reply,
+            as: 'replies',
+        }]
+    });
+    return posts;
+};
+
+
+/**
+ * @description - Fetches all Posts by single User
+*/
+export const listUserPost = async (userId) => {
     const posts = await Post.findAll({
+        where: { userId },
         include: [{
             model: Like,
             as: 'likes',

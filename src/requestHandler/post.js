@@ -1,4 +1,5 @@
-import { createPost, listPost, getOne,  updatePost, destroyPost } from '../services/post';
+import { createPost, listPost, listUserPost, getOne,  updatePost, destroyPost } from '../services/post';
+import { getPagination, getPagingData } from '../helpers/pagination';
 
 const postHandler = {
     create: async(req, res) => {
@@ -15,8 +16,25 @@ const postHandler = {
         }
     },
     getAll: async(req, res) => {
+      try {
+          const { page, size } = req.query;
+          const { limit, offset } = getPagination(page, size);
+          const posts = await listPost(parseInt(limit), parseInt(offset));
+          const response = getPagingData(posts, page, limit);
+          if (posts.error) {
+              return res.json({ status: 500, error: posts.error });
+          }
+          return res.status(201).json({ status: 200, message: 'Posts Returned Successfully', data: response });
+        } catch (error) {
+          return res.status(500).json({
+            error: 'Internal server error'
+          });
+      }
+    },
+    getAllByUser: async(req, res) => {
         try {
-            const posts = await listPost(req.body);
+            const { page, limit } = req.query;
+            const posts = await listUserPost(req.params.userId);
             if (posts.error) {
                 return res.json({ status: 500, error: posts.error });
             }
