@@ -9,7 +9,9 @@
 |Sequelize|A promise-based ORM for Node.js. It helps with data conversion|
 |Express| A flexible Node.js web application framework|
 |redis| For Caching|
-|Babel||
+|Babel|for compliling javascript|
+|nodemailer|For email notifications|
+|Cloudinary|For image uploads|
 
 
 * Find Postman API here https://www.getpostman.com/collections/c75647837e9f25e6ba2a
