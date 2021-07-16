@@ -12,7 +12,7 @@
 |Babel|for compliling javascript|
 |nodemailer|For email notifications|
 |Cloudinary|For image uploads|
-
+|Jsonwebtoken|For Token Based Authentication|
 
 * Find Postman API here https://www.getpostman.com/collections/c75647837e9f25e6ba2a
 
