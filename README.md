@@ -1,5 +1,5 @@
 # facepost api
-* API clone of facebook app
+* API clone of facebook post feature
 
 ## Tools Used
 | **Dependency** | **Use** |
